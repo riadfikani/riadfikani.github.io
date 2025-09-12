@@ -141,7 +141,33 @@
 
 
             <!--===== CONTACT =====-->
-            Feel free to reach out: riad [at] fikani [dot] com
+            <!--===== CONTACT =====-->
+<section class="contact section" id="contact">
+  <h2 class="section-title">Contact</h2>
+  <p>Feel free to reach out: <span id="e"></span></p>
+</section>
+
+<script>
+  
+  (function () {
+   
+    var user = 'riad', domain = 'fikani.com';
+    
+
+    var addr = user + '@' + domain;
+
+    
+    var text = user + ' [at] ' + domain.replace(/\./g, ' [dot] ');
+
+    var a = document.createElement('a');
+    a.href = 'mailto:' + addr;
+    a.textContent = text;
+    a.rel = 'nofollow';
+
+    var span = document.getElementById('e');
+    if (span) span.appendChild(a);
+  })();
+</script>
         </main>
 
         <!--===== FOOTER =====-->
@@ -224,6 +250,7 @@
 
 
 <!--Decode this : RkxBR3tsa3NqYWt0aW0yMDIyfQ==>
+
 
 
 
