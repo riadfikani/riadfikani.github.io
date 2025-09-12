@@ -542,18 +542,55 @@ canvas.particles-js-canvas-el{
   }
 }
 
-/* Projects accordion */
+/* Projects accordion (top-level) */
 .projlist{ max-width:980px; margin:0 auto; display:grid; gap:1rem; }
-.project{ border:1px solid #e5e7eb; border-radius:12px; background:#fff; overflow:hidden; }
-.project > summary{ list-style:none; cursor:pointer; padding:1rem 1.25rem; display:flex; justify-content:space-between; align-items:center; font-weight:700; }
-.project > summary::-webkit-details-marker{ display:none; }
-.project[open] > summary{ border-bottom:1px solid #e5e7eb; }
-.project__meta{ color:#6b7280; font-weight:500; font-size:.95rem; }
-.project__body{ padding:1rem 1.25rem; }
 
-/* existing project visuals */
+/* make the details shell transparent; the "pill" is the summary */
+.project{ border:0; background:transparent; }
+.project > summary{
+  list-style:none;
+  cursor:pointer;
+  user-select:none;
+  padding:1rem 1.25rem;
+  display:flex; justify-content:space-between; align-items:center; gap:.75rem;
+  font-weight:700;
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+  transition:box-shadow .18s ease, transform .18s ease;
+}
+.project > summary::-webkit-details-marker{ display:none; }
+/* caret */
+.project > summary::before{
+  content:'▸';
+  font-size:1rem;
+  color:#374151;
+  margin-right:.25rem;
+  transition:transform .18s ease;
+}
+.project[open] > summary::before{ transform:rotate(90deg); }
+.project > summary:focus-visible{ outline:2px solid #3b82f6; outline-offset:2px; }
+.project > summary:hover{ box-shadow:0 10px 24px rgba(0,0,0,.08); transform:translateY(-1px); }
+
+.project__title{ font-weight:800; }
+.project__meta{ color:#6b7280; font-weight:500; font-size:.95rem; }
+
+/* the content card that opens under the pill */
+.project__body{
+  margin-top:.75rem;
+  padding:1rem 1.25rem;
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  box-shadow:0 8px 24px rgba(0,0,0,.06);
+  animation:slideDown .2s ease;
+}
+@keyframes slideDown{ from{opacity:0; transform:translateY(-4px);} to{opacity:1; transform:translateY(0);} }
+
+/* keep your existing project visuals */
 .proj{ display:grid; grid-template-columns:1fr; gap:1.25rem; }
-@media (min-width: 900px){ .proj{ grid-template-columns:0.9fr 1.1fr; align-items:start; } }
+@media (min-width:900px){ .proj{ grid-template-columns:0.9fr 1.1fr; align-items:start; } }
 .proj__media img{ width:100%; height:auto; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.06); }
 .proj__caption{ color:#6b7280; font-size:.9rem; margin-top:.35rem; }
 .proj__title{ margin:.5rem 0 .25rem; font-weight:800; }
@@ -567,6 +604,7 @@ html{ scroll-behavior:smooth; }
 .section, #projects, #opamp{ scroll-margin-top:90px; }
 #particles-js{ position:fixed; inset:0; z-index:0; pointer-events:none; }
 header, main, footer{ position:relative; z-index:1; }
+
 
 
 
