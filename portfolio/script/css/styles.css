@@ -315,6 +315,47 @@ canvas.particles-js-canvas-el{
   .exp__right > div{ white-space:normal; }
 }
 
+/* Project block */
+.proj{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.proj__media img{
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+}
+.proj__caption{
+  color:#6b7280;
+  font-size:.9rem;
+  margin-top:.35rem;
+}
+.proj__title{ margin:.25rem 0 .5rem; font-weight:800; }
+.proj__bullets{ margin-left:1.1rem; list-style:disc; }
+.proj__details{
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:.75rem 1rem;
+  background:#fff;
+  margin:.75rem 0;
+}
+.proj__details > summary{
+  cursor:pointer;
+  font-weight:700;
+  color:#1f2937;
+  margin:-.25rem 0 .25rem;
+}
+.proj__content{ margin-top:.35rem; color:#1f2937; }
+
+/* wider layout for larger screens */
+@media (min-width: 900px){
+  .proj{ grid-template-columns: 0.9fr 1.1fr; align-items:start; }
+}
+
 
 /* ===== SKILLS =====*/
 .skills__container{
@@ -500,5 +541,6 @@ canvas.particles-js-canvas-el{
     right: 10%;
   }
 }
+
 
 
