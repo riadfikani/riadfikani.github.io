@@ -151,19 +151,19 @@
     </article>
 <!--===== PROJECT: OP-AMP =====-->
 <section class="section" id="opamp">
-  <h2 class="section-title">Breadboard CMOS Two-Stage Op-Amp</h2>
+  <h2 class="section-title"> Two-Stage CMOS amplifier with current mirror and source follower </h2>
 
   <div class="proj">
     <figure class="proj__media">
       <!-- If your image is in /img at repo root, change to ../img/opamp.png -->
-      <img src="./img/opamp.png" alt="Two-stage CMOS op-amp schematic" />
+      <img src="./img/OPAMP.png" alt="Two-stage CMOS op-amp schematic" />
       <figcaption class="proj__caption">
         Current mirror → differential pair (PMOS active-load) → common-source stage + Miller \(C_c\) (optional \(R_z\)) → source follower.
       </figcaption>
     </figure>
 
     <div class="proj__body">
-      <h3 class="proj__title">What we built (and why it works)</h3>
+      <h3 class="proj__title">What I built</h3>
       <ul class="proj__bullets">
         <li>Architecture: mirror bias → NMOS diff pair with PMOS active-load → NMOS common-source + Miller \(C_c\) → NMOS source follower → inverting feedback.</li>
         <li>Unity-gain estimate: \(f_t \approx \dfrac{g_{m1}}{2\pi C_c}\).</li>
@@ -204,7 +204,7 @@
       </details>
 
       <details class="proj__details">
-        <summary>KCL “cheat-sheet” (three-node form)</summary>
+        <summary>KCL cheat-sheet (three-node form)</summary>
         <div class="proj__content">
           <p>Let unknowns be the summing node \(v_n\), the internal node \(v_x\), and output \(v_o\). With
           \(Y_c(s)=\dfrac{sC_c}{1+sR_zC_c}\), \(Y_{in}=1/R_{in}+sC_{in}\), \(Y_f=1/R_f+sC_f\),
@@ -396,6 +396,7 @@
 
 
 <!--Decode this : RkxBR3tsa3NqYWt0aW0yMDIyfQ==>
+
 
 
 
