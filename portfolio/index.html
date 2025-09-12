@@ -251,13 +251,128 @@
     </details>
 
     <!-- Placeholder for future projects -->
-    <details class="project">
-      <summary>
-        <span class="project__title">Project 2</span>
-        <span class="project__meta">coming soon</span>
-      </summary>
-      <div class="project__body"><p>Add the next build here.</p></div>
-    </details>
+   <!-- GP PROJECT -->
+<details class="project">
+  <summary>
+    <span class="project__title">Gaussian-Process CO₂ Forecasting</span>
+    <span class="project__meta">ExactGP • periodic + trend • BIC model selection</span>
+  </summary>
+
+  <div class="project__body">
+    <div class="proj">
+      <figure class="proj__media">
+        <img src="./img/gp_co2_series.png" alt="CO₂ time series with trend and annual seasonality">
+        <figcaption class="proj__caption">
+          Atmospheric CO₂ shows a long-term upward trend with clear yearly seasonality (the “wiggles”).
+        </figcaption>
+      </figure>
+
+      <div class="proj__body">
+        <h3 class="proj__title">What I built</h3>
+        <ul class="proj__bullets">
+          <li><strong>ExactGP</strong> regression in GPyTorch with a linear mean for the trend and a
+              <em>periodic kernel</em> (≈ 1-year period) to capture seasonality.</li>
+          <li>Compared models (naïve RBF vs. periodic+trend) with the <strong>BIC</strong> criterion and kept the lower-BIC model.</li>
+          <li>Posterior-predictive checks: mean curve, 95% credible band, and forecast window; optional info-gain curve for where to sample next.</li>
+        </ul>
+
+        <!-- A: Core GP regression (derivation) -->
+        <details class="proj__details" open>
+          <summary>GP regression in one page (the equations you actually use)</summary>
+          <div class="proj__content">
+            <p>Prior: \( f \sim \mathcal{GP}(m(x), k(x,x')) \), likelihood \( y = f(x) + \epsilon,\ \epsilon\!\sim\!\mathcal{N}(0,\sigma^2) \).</p>
+            <p>Let \(K = [k(x_i,x_j)]_{ij}\), \(k_* = [k(x_i,x_*)]_i\).
+               The posterior for \(f(x_*)\) is Gaussian with</p>
+            <p>
+              \[
+              \mu_* = m(x_*) + k_*^\top (K+\sigma^2 I)^{-1}(y - m(X)),\quad
+              \sigma_*^2 = k(x_*,x_*) - k_*^\top (K+\sigma^2 I)^{-1}k_*.
+              \]
+            </p>
+            <p>To predict \(y_*\) (not just \(f_*\)), add observation noise: \(\operatorname{Var}(y_*)=\sigma_*^2+\sigma^2\).</p>
+          </div>
+        </details>
+
+        <!-- B: Kernels & mean -->
+        <details class="proj__details">
+          <summary>Trend + seasonality: mean and periodic kernel</summary>
+          <div class="proj__content">
+            <p>Mean function for drift: \( m(x)=a + b\,x \).</p>
+            <p>Periodic kernel (period \(p\), length-scale \(\ell\), amplitude \(\sigma\)):</p>
+            <p>
+              \[
+              k_{\text{per}}(x,x')=\sigma^2 \exp\!\Big(-\frac{2\sin^2(\pi|x-x'|/p)}{\ell^2}\Big).
+              \]
+            </p>
+            <p>Final prior: \( k(x,x') = k_{\text{per}}(x,x') + k_{\text{rbf}}(x,x') \) with
+               \(k_{\text{rbf}}(x,x')=\sigma_r^2\exp(-\tfrac{(x-x')^2}{2\ell_r^2})\) for slow residual variation.</p>
+          </div>
+        </details>
+
+        <!-- C: Training -->
+        <details class="proj__details">
+          <summary>Training via marginal log-likelihood (ExactGP)</summary>
+          <div class="proj__content">
+            <p>Maximize the exact marginal log-likelihood (hyperparameters \(\theta\)):</p>
+            <p>
+              \[
+              \log p(y\!\mid\!X,\theta)=
+              -\tfrac{1}{2}(y-m)^\top (K_\theta+\sigma^2 I)^{-1}(y-m)
+              -\tfrac{1}{2}\log|K_\theta+\sigma^2 I| - \tfrac{n}{2}\log(2\pi).
+              \]
+            </p>
+            <p>In GPyTorch this is <code>ExactMarginalLogLikelihood</code> with an <code>ExactGP</code> model.</p>
+          </div>
+        </details>
+
+        <!-- D: Model selection -->
+        <details class="proj__details">
+          <summary>Why periodic+trend won (BIC)</summary>
+          <div class="proj__content">
+            <p>Use \( \text{BIC} = -2\log \hat L + k\log n \) (lower is better) to penalize unnecessary parameters.
+               The periodic+trend model reduced the data misfit enough to beat its extra parameters.</p>
+          </div>
+        </details>
+
+        <!-- E: Plots, as a lesson -->
+        <details class="proj__details">
+          <summary>Reading the plots</summary>
+          <div class="proj__content">
+            <figure class="proj__media">
+              <img src="./img/gp_posterior.png" alt="Posterior mean and 95% band">
+              <figcaption class="proj__caption">
+                Posterior mean (dark line) and 95% credible band. The band widens where data are sparse,
+                then narrows as the seasonal structure is learned.
+              </figcaption>
+            </figure>
+
+            <ul class="proj__bullets">
+              <li><strong>Time series (first figure):</strong> the GP’s periodic kernel locks onto the annual wiggles; the linear mean tracks the long-term rise.</li>
+              <li><strong>Posterior band:</strong> variance is small where the model has many nearby points with the same phase; it grows in the extrapolation window.</li>
+              <li><strong>Acquisition (optional):</strong> information-gain peaks where the posterior is uncertain yet plausible—good next places to measure.</li>
+            </ul>
+
+            <figure class="proj__media">
+              <img src="./img/gp_acq.png" alt="Information-gain acquisition over x (optional)">
+              <figcaption class="proj__caption">
+                Information-theoretic acquisition spikes near the most informative region—where a single new CO₂ reading
+                would shrink posterior uncertainty the most.
+              </figcaption>
+            </figure>
+          </div>
+        </details>
+
+        <!-- F: Link to full PDF -->
+        <p>
+          <a href="./files/homework-06_Fikani.pdf" target="_blank" rel="noopener">
+            Full report (PDF)
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</details>
+
 
   </div>
 </section>
@@ -429,6 +544,7 @@
 
 
 <!--Decode this : RkxBR3tsa3NqYWt0aW0yMDIyfQ==>
+
 
 
 
