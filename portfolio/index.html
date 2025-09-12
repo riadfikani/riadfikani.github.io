@@ -152,86 +152,116 @@
   </div>        <!-- closes .exp__container -->
 </section> 
    
-<!--===== PROJECT: OP-AMP =====-->
-<section class="section" id="opamp">
-  <h2 class="section-title"> Two-Stage CMOS amplifier with current mirror and source follower </h2>
+<!--===== PROJECTS =====-->
+<section class="section" id="projects">
+  <h2 class="section-title">Projects</h2>
 
-  <div class="proj">
-    <figure class="proj__media">
-      <!-- If your image is in /img at repo root, change to ../img/opamp.png -->
-      <img src="./img/OPAMP.png" alt="Two-stage CMOS op-amp schematic" />
-      <figcaption class="proj__caption">
-        Current mirror → differential pair (PMOS active-load) → common-source stage + Miller \(C_c\) (optional \(R_z\)) → source follower.
-      </figcaption>
-    </figure>
+  <div class="projlist bd-grid">
 
-    <div class="proj__body">
-      <h3 class="proj__title">What I built</h3>
-      <ul class="proj__bullets">
-        <li>Architecture: mirror bias → NMOS diff pair with PMOS active-load → NMOS common-source + Miller \(C_c\) → NMOS source follower → inverting feedback.</li>
-        <li>Unity-gain estimate: \(f_t \approx \dfrac{g_{m1}}{2\pi C_c}\).</li>
-        <li>Miller zero: with only \(C_c\) the zero is RHP at \(\omega_z \approx g_{m2}/C_c\). Add \(R_z\) in series with \(C_c\) so \(\omega_z \approx \dfrac{1}{C_c}\!\left(g_{m2}-\dfrac{1}{R_z}\right)\); pick \(R_z\!\approx\!1/g_{m2}\) to push the zero to LHP or \(\infty\).</li>
-        <li>Noise-gain shaping: small \(C_f\) across \(R_f\) flattens the noise-gain at crossover; a handy rule is \(C_f \approx C_{in}\,\dfrac{R_f}{R_{in}}\).</li>
-      </ul>
+    <!-- Collapsible project: wraps your OP-AMP section exactly as-is -->
+    <details class="project" open>
+      <summary>
+        <span class="project__title">Two-Stage CMOS amplifier</span>
+        <span class="project__meta">current mirror • Miller comp • source follower</span>
+      </summary>
 
-      <!-- Collapsible derivations -->
-      <details class="proj__details" open>
-        <summary>Core small-signal facts</summary>
-        <div class="proj__content">
-          <p>\(g_m \approx \dfrac{2I_D}{V_{ov}}\), \(\; r_o \approx \dfrac{1}{\lambda I_D} \approx \dfrac{V_A}{I_D}\).</p>
-          <p>Stage-1 output resistance at node \(v_x\): \(R_x \approx r_{o,n} \parallel r_{o,p}\) (include mirror devices if precise).</p>
-          <p>Stage-1 gain: \(\boxed{A_{v1} \approx g_{m1}\,R_x}\).</p>
-          <p>Stage-2 gain: \(\boxed{A_{v2} \approx -\,g_{m2}\,(r_{o2}\parallel R_L)}\).</p>
-          <p>Unity-gain: \(\boxed{f_t \approx \dfrac{g_{m1}}{2\pi C_c}}\).</p>
-        </div>
-      </details>
+      <div class="project__body">
+        <!--===== PROJECT: OP-AMP =====-->
+        <section class="section" id="opamp">
+          <h2 class="section-title"> Two-Stage CMOS amplifier with current mirror and source follower </h2>
 
-      <details class="proj__details">
-        <summary>Miller compensation and the “nulling” resistor</summary>
-        <div class="proj__content">
-          <p>With only \(C_c\), the feed-forward path creates a right-half-plane zero at \(\omega_z \approx g_{m2}/C_c\).</p>
-          <p>Place \(R_z\) in series with \(C_c\). Then \(Y_c(s)=\dfrac{sC_c}{1+sR_zC_c}\) and the zero shifts to
-          \(\displaystyle \omega_z \approx \frac{1}{C_c}\!\left(g_{m2}-\frac{1}{R_z}\right).\)
-          Choosing \(R_z \approx 1/g_{m2}\) cancels the zero (or moves it to the LHP if \(R_z &lt; 1/g_{m2}\)).</p>
-          <p>Second pole: \(p_o \approx -\dfrac{1}{(r_{o2}\parallel R_L)\,(C_L + C_o)}\); keep it above the unity crossing for comfortable phase margin.</p>
-        </div>
-      </details>
+          <div class="proj">
+            <figure class="proj__media">
+              <!-- If your image is in /img at repo root, change to ../img/opamp.png -->
+              <img src="./img/OPAMP.png" alt="Two-stage CMOS op-amp schematic" />
+              <figcaption class="proj__caption">
+                Current mirror → differential pair (PMOS active-load) → common-source stage + Miller \(C_c\) (optional \(R_z\)) → source follower.
+              </figcaption>
+            </figure>
 
-      <details class="proj__details">
-        <summary>Closed-loop view (noise-gain &amp; stability)</summary>
-        <div class="proj__content">
-          <p>In inverting mode, closed-loop gain is \(A_v \approx -R_f/R_{in}\). The <em>noise-gain</em> is \(N_0 = 1 + R_f/R_{in}\), so
-          \(f_{BW} \approx \dfrac{\text{GBW}}{N_0}\) with \(\text{GBW}\approx f_t\) for a one-pole open-loop.</p>
-          <p>Choose \(C_f\) across \(R_f\) to flatten noise-gain near crossover: \(\boxed{C_f \approx C_{in}\,\dfrac{R_f}{R_{in}}}\), where \(C_{in}\) includes gate and stray input capacitances.</p>
-        </div>
-      </details>
+            <div class="proj__body">
+              <h3 class="proj__title">What I built</h3>
+              <ul class="proj__bullets">
+                <li>Architecture: mirror bias → NMOS diff pair with PMOS active-load → NMOS common-source + Miller \(C_c\) → NMOS source follower → inverting feedback.</li>
+                <li>Unity-gain estimate: \(f_t \approx \dfrac{g_{m1}}{2\pi C_c}\).</li>
+                <li>Miller zero: with only \(C_c\) the zero is RHP at \(\omega_z \approx g_{m2}/C_c\). Add \(R_z\) in series with \(C_c\) so \(\omega_z \approx \dfrac{1}{C_c}\!\left(g_{m2}-\dfrac{1}{R_z}\right)\); pick \(R_z\!\approx\!1/g_{m2}\) to push the zero to LHP or \(\infty\).</li>
+                <li>Noise-gain shaping: small \(C_f\) across \(R_f\) flattens the noise-gain at crossover; a handy rule is \(C_f \approx C_{in}\,\dfrac{R_f}{R_{in}}\).</li>
+              </ul>
 
-      <details class="proj__details">
-        <summary>KCL cheat-sheet (three-node form)</summary>
-        <div class="proj__content">
-          <p>Let unknowns be the summing node \(v_n\), the internal node \(v_x\), and output \(v_o\). With
-          \(Y_c(s)=\dfrac{sC_c}{1+sR_zC_c}\), \(Y_{in}=1/R_{in}+sC_{in}\), \(Y_f=1/R_f+sC_f\),
-          \(Y_x=1/r_{o1}+sC_{1p}\), \(Y_o=1/R_L+1/r_{o2}+sC_L\):</p>
-          <p>\(Y_{in}(v_n - v_{in}) + Y_f(v_n - v_o)=0\)</p>
-          <p>\(-g_{m1}v_n + (Y_x+Y_c)v_x - Y_c v_o = 0\)</p>
-          <p>\((Y_o+Y_c)v_o + (-Y_c - g_{m2})v_x = 0\)</p>
-          <p>Solving yields the closed-loop transfer, which reduces to \(-R_f/R_{in}\) at low frequency and exposes how \(C_c, R_z, C_f\) shape the loop.</p>
-        </div>
-      </details>
+              <!-- Collapsible derivations -->
+              <details class="proj__details" open>
+                <summary>Core small-signal facts</summary>
+                <div class="proj__content">
+                  <p>\(g_m \approx \dfrac{2I_D}{V_{ov}}\), \(\; r_o \approx \dfrac{1}{\lambda I_D} \approx \dfrac{V_A}{I_D}\).</p>
+                  <p>Stage-1 output resistance at node \(v_x\): \(R_x \approx r_{o,n} \parallel r_{o,p}\) (include mirror devices if precise).</p>
+                  <p>Stage-1 gain: \(\boxed{A_{v1} \approx g_{m1}\,R_x}\).</p>
+                  <p>Stage-2 gain: \(\boxed{A_{v2} \approx -\,g_{m2}\,(r_{o2}\parallel R_L)}\).</p>
+                  <p>Unity-gain: \(\boxed{f_t \approx \dfrac{g_{m1}}{2\pi C_c}}\).</p>
+                </div>
+              </details>
 
-      <details class="proj__details">
-        <summary>Build notes that mattered</summary>
-        <div class="proj__content">
-          <ul>
-            <li>Keep the Miller path \(v_o \leftrightarrow v_x\) very short; long jumpers add parasitic L and C.</li>
-            <li>Decouple \(V_{DD}\) near the second stage; star the mirror, tail source, and output return grounds.</li>
-            <li>If you change \(R_{in}\) for different gains, re-check \(C_f\) so the noise-gain stays tame.</li>
-          </ul>
-        </div>
-      </details>
-    </div>
+              <details class="proj__details">
+                <summary>Miller compensation and the “nulling” resistor</summary>
+                <div class="proj__content">
+                  <p>With only \(C_c\), the feed-forward path creates a right-half-plane zero at \(\omega_z \approx g_{m2}/C_c\).</p>
+                  <p>Place \(R_z\) in series with \(C_c\). Then \(Y_c(s)=\dfrac{sC_c}{1+sR_zC_c}\) and the zero shifts to
+                  \(\displaystyle \omega_z \approx \frac{1}{C_c}\!\left(g_{m2}-\frac{1}{R_z}\right).\)
+                  Choosing \(R_z \approx 1/g_{m2}\) cancels the zero (or moves it to the LHP if \(R_z &lt; 1/g_{m2}\)).</p>
+                  <p>Second pole: \(p_o \approx -\dfrac{1}{(r_{o2}\parallel R_L)\,(C_L + C_o)}\); keep it above the unity crossing for comfortable phase margin.</p>
+                </div>
+              </details>
+
+              <details class="proj__details">
+                <summary>Closed-loop view (noise-gain &amp; stability)</summary>
+                <div class="proj__content">
+                  <p>In inverting mode, closed-loop gain is \(A_v \approx -R_f/R_{in}\). The <em>noise-gain</em> is \(N_0 = 1 + R_f/R_{in}\), so
+                  \(f_{BW} \approx \dfrac{\text{GBW}}{N_0}\) with \(\text{GBW}\approx f_t\) for a one-pole open-loop.</p>
+                  <p>Choose \(C_f\) across \(R_f\) to flatten noise-gain near crossover: \(\boxed{C_f \approx C_{in}\,\dfrac{R_f}{R_{in}}}\), where \(C_{in}\) includes gate and stray input capacitances.</p>
+                </div>
+              </details>
+
+              <details class="proj__details">
+                <summary>KCL cheat-sheet (three-node form)</summary>
+                <div class="proj__content">
+                  <p>Let unknowns be the summing node \(v_n\), the internal node \(v_x\), and output \(v_o\). With
+                  \(Y_c(s)=\dfrac{sC_c}{1+sR_zC_c}\), \(Y_{in}=1/R_{in}+sC_{in}\), \(Y_f=1/R_f+sC_f\),
+                  \(Y_x=1/r_{o1}+sC_{1p}\), \(Y_o=1/R_L+1/r_{o2}+sC_L\):</p>
+                  <p>\(Y_{in}(v_n - v_{in}) + Y_f(v_n - v_o)=0\)</p>
+                  <p>\(-g_{m1}v_n + (Y_x+Y_c)v_x - Y_c v_o = 0\)</p>
+                  <p>\((Y_o+Y_c)v_o + (-Y_c - g_{m2})v_x = 0\)</p>
+                  <p>Solving yields the closed-loop transfer, which reduces to \(-R_f/R_{in}\) at low frequency and exposes how \(C_c, R_z, C_f\) shape the loop.</p>
+                </div>
+              </details>
+
+              <details class="proj__details">
+                <summary>Build notes that mattered</summary>
+                <div class="proj__content">
+                  <ul>
+                    <li>Keep the Miller path \(v_o \leftrightarrow v_x\) very short; long jumpers add parasitic L and C.</li>
+                    <li>Decouple \(V_{DD}\) near the second stage; star the mirror, tail source, and output return grounds.</li>
+                    <li>If you change \(R_{in}\) for different gains, re-check \(C_f\) so the noise-gain stays tame.</li>
+                  </ul>
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+        <!--===== /PROJECT: OP-AMP =====-->
+      </div>
+    </details>
+
+    <!-- Placeholder for future projects -->
+    <details class="project">
+      <summary>
+        <span class="project__title">Project 2</span>
+        <span class="project__meta">coming soon</span>
+      </summary>
+      <div class="project__body"><p>Add the next build here.</p></div>
+    </details>
+
   </div>
 </section>
+
 
             <!--===== SKILLS =====-->
             <!--===== RELEVANT COURSES =====-->
@@ -399,6 +429,7 @@
 
 
 <!--Decode this : RkxBR3tsa3NqYWt0aW0yMDIyfQ==>
+
 
 
 
